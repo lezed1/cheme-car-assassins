@@ -1,11 +1,4 @@
-- if game_state == :pregame
-  .row
-    .col-md-12
-      .alert.alert-warning
-        | If you never received a verification email, please enter your Andrew ID on <a href="#{url('/signup/resend_verification')}">this page</a> to have a new one sent.
-  .row
-    .center#count-down
-- elsif game_state == :postgame
+- if game_state == :postgame
   .row
     .col-md-12
       .alert.alert-info
@@ -13,15 +6,12 @@
 .row
   - if @player.nil? && game_state == :pregame
     .col-md-6
-      img.img-responsive src='logo.png'
-      img.img-responsive.hidden-phone src='skull.png' alt="You won't see it coming"
+      img.img-responsive.center.spoon-image src='spoon_purple.png' alt="xX{Dancing Spoon}Xx"
     .col-md-6
       == slim :signup, :locals => {:programs => {}}, :layout => false
   - else
-    .col-md-6
-      img.img-responsive src='logo.png'
-    .col-md-6
-      img.img-responsive src='skull.png' alt="You won't see it coming"
+    .col-md-6.col-md-offset-3
+      img.img-responsive.center.spoon-image src='spoon_purple.png' alt="xX{Dancing Spoon}Xx"
 
 .row
   .col-md-12

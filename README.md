@@ -1,4 +1,4 @@
-CMU-Assassins
+JJHS-Spoons
 =============
 
-The website for cmu-assassins.tk
+The website for spoons.tk

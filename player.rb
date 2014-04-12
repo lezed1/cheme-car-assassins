@@ -73,8 +73,8 @@ module Assassins
     end
 
     post '/login' do
-      player = Player.first(:andrew_id => params.has_key?('andrew_id') ?
-                              params['andrew_id'].downcase.strip : nil)
+      player = Player.first(:echalk_id => params.has_key?('echalk_id') ?
+                              params['echalk_id'].downcase.strip : nil)
       if (player.nil?)
         return slim :login, :locals => {:errors =>
           ['Invalid Andrew ID. Please try again.']}
@@ -85,7 +85,7 @@ module Assassins
           return redirect to('/signup/resend_verification')
         else
           return slim :login, :locals => {:errors =>
-            ['You have been assassinated and your account made inactive. Thanks for playing!']}
+            ['You have been tagged and your account made inactive. Thanks for playing!']}
         end
       end
 
@@ -109,19 +109,17 @@ module Assassins
     end
 
     post '/signup', :game_state => :pregame do
-      if (params.has_key?('andrew_id') && params['andrew_id'].index('@'))
+      if (params.has_key?('echalk_id') && params['echalk_id'].index('@'))
         return slim :signup, :locals => {:errors =>
           ['Please enter only your Andrew ID, not your full email address.']};
       end
 
       player = Player.new(:name => params['name'],
-                          :andrew_id => params.has_key?('andrew_id') ?
-                            params['andrew_id'].downcase.strip : nil,
-                          :floor_id => params['floor'],
-                          :program_id => params['program'])
+                          :echalk_id => params.has_key?('echalk_id') ?
+                            params['echalk_id'].downcase.strip : nil)
       player.generate_secret! 2
       if (player.save)
-        player.send_verification(url("/signup/verify?aid=#{player.andrew_id}&nonce=#{player.verification_key}"))
+        player.send_verification(url("/signup/verify?aid=#{player.echalk_id}&nonce=#{player.verification_key}"))
         slim :signup_confirm
       else
         slim :signup, :locals => {:errors => player.errors.full_messages}
@@ -133,7 +131,7 @@ module Assassins
     end
 
     post '/signup/resend_verification', :game_state => :pregame do
-      player = Player.first(:andrew_id => params['andrew_id'])
+      player = Player.first(:echalk_id => params['echalk_id'])
       if (player.nil?)
         return slim :resend_verification, :locals => {:errors =>
           ['Invalid Andrew ID']}
@@ -146,12 +144,12 @@ module Assassins
 
       player.verification_key = SecureRandom.uuid
       player.save!
-      player.send_verification(url("/signup/verify?aid=#{player.andrew_id}&nonce=#{player.verification_key}"))
+      player.send_verification(url("/signup/verify?aid=#{player.echalk_id}&nonce=#{player.verification_key}"))
       slim :signup_confirm
     end
 
     get '/signup/verify', :game_state => :pregame do
-      player = Player.first(:andrew_id => params['aid'])
+      player = Player.first(:echalk_id => params['aid'])
 
       if (player.nil? || player.is_verified)
         return redirect to('/')
@@ -185,8 +183,8 @@ module Assassins
         @player.last_activity = Time.now
         @player.set_target_notify(target.target)
         @player.save!
-        target.send_email('You were assassinated',
-                          "You have been assassinated by #{@player.name}. Thanks for playing!")
+        target.send_email('You were tagged!',
+                          "You have been tagged by #{@player.name}. Thanks for playing!")
         redirect to('/dashboard')
       else
         @player.failed_kill_attempts += 1

@@ -2,14 +2,8 @@
   .col-sm-5.col-sm-offset-1.text-center
     h3 Your information
     .well
-      h4 = @player.name
+      h4 Name: #{@player.name}
       p.user-info
-        .floor 
-          strong Floor: 
-          = @player.floor.description
-        .program
-          strong Program: 
-          = @player.program.title
         .secret
           strong Secret Words: 
           .label.label-success = @player.secret
@@ -17,19 +11,13 @@
     h3 Your target's information
     .well
       - if game_state == :ingame and not @player.target.nil?
-        h4 = @player.target.name
+        h4 Name: #{@player.target.name}
         p.user-info
-          .floor 
-            strong Floor: 
-            = @player.target.floor.description
-          .program
-            strong Program: 
-            = @player.target.program.title
           .confirm
           br
           form(action=url('/dashboard/assassinate') method='post')
             .form-group
-              label Enter your target's secret words to confirm your assassination
+              label Enter your target's secret words to confirm your tag!
               .input-group.col-sm-6.col-sm-offset-3
                 input.form-control#target_words(name='target_secret' type='text' placeholder='Tomato Sneaker' required=true)
                 span.input-group-btn

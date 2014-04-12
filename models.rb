@@ -9,35 +9,18 @@ module Assassins
     end
   end
 
-  class Program
-    include DataMapper::Resource
-
-    property :id, Serial
-    property :title, String
-  end
-
-  class Floor
-    include DataMapper::Resource
-
-    property :id, Serial
-    property :name, String
-    property :description, String
-  end
-
   class Player
     include DataMapper::Resource
 
     property :id, Serial
-    property :andrew_id, String, :unique => true,
+    property :echalk_id, String, :unique => true,
       :messages => {
-        :presence  => 'Andrew ID must not be blank',
-        :is_unique => 'Andrew ID is already taken'
+        :presence  => 'Echalk Username must not be blank',
+        :is_unique => 'Echalk Username is already taken'
       }
     property :secret, String
 
     property :name, String
-    belongs_to :floor
-    belongs_to :program
 
     belongs_to :target, :model => 'Player', :required => false
     property :failed_kill_attempts, Integer, :default => 0
@@ -52,7 +35,7 @@ module Assassins
     def set_target_notify (target)
       self.target = target
       send_email('You have a new target!',
-                 "Name: #{target.name}\nFloor: #{target.floor.description}\nProgram: #{target.program.title}\n\nPlease remember that the official rules are posted at http://www.cmu-assassins.tk/rules")
+                 "Name: #{target.name}\n\nPlease remember that the official rules are posted at http://spoons.tk/rules")
     end
 
     def generate_secret! (num_words)
@@ -67,7 +50,7 @@ module Assassins
     end
 
     def email
-      "#{self.andrew_id}@andrew.cmu.edu"
+      "#{self.echalk_id}@klschools.org"
     end
 
     def active?

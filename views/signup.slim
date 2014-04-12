@@ -3,25 +3,11 @@ form.form-horizontal(action=url('/signup') method='post' role='role')
   .form-group
     label.control-label.col-sm-2(for='name') Full Name
     .col-sm-10
-      input.form-control#name(name='name' type='text' placeholder='Andrew Carnegie' required=true)
+      input.form-control#name(name='name' type='text' placeholder='John Jay' required=true)
   .form-group
-    label.control-label.col-sm-2(for='andrew_id') Andrew ID
+    label.control-label.col-sm-2(for='echalk_id') EChalk Username
     .col-sm-10
-      input.form-control#andrew_id(name='andrew_id' type='text' placeholder='acarnegie' required=true)
-  .form-group
-    label.control-label.col-sm-2(for='floor') Floor/Tower
-    .col-sm-10
-      select.form-control(name='floor')
-        - Assassins::Floor.all.each do |floor|
-          option(value=floor.id) #{floor.description}
-  .form-group
-    label.control-label.col-sm-2(for='program') Program
-    .col-sm-10
-      .radio
-        - Assassins::Program.all.each do |program|
-          label
-            input(type='radio' name='program' value=program.id)
-            #{program.title}
+      input.form-control#echalk_id(name='echalk_id' type='text' placeholder='john.jay' required=true)
   .form-group
     .col-sm-10.col-sm-offset-2
       button.btn.btn-primary(type='submit') Sign Up
