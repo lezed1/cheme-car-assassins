@@ -1,0 +1,3 @@
+[submodule "res/bootstrap"]
+	path = res/bootstrap
+	url=git@github.com:lezed1/JJHS-bootstrap.git
