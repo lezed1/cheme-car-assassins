@@ -5,7 +5,7 @@ require 'slim'
 module Assassins
   class Player
     def send_verification (url)
-      send_email('Please verify your identity',
+      send_email('Please verify your Email',
                  "Secret words: #{self.secret}\n#{url}")
     end
 
