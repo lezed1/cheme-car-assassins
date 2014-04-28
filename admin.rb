@@ -84,11 +84,6 @@ module Assassins
       end
     end
 
-    post '/admin/dashboard/prune_inactive', :is_admin => true, :game_state => :ingame do
-      Player.prune_inactive
-      redirect to('/admin/dashboard')
-    end
-
     get '/admin/dashboard', :is_admin => true do
       slim :'admin/dashboard'
     end
