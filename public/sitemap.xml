@@ -13,6 +13,9 @@
         <loc>http://spoons.tk/signup</loc>
     </url>
     <url>
+        <loc>http://spoons.tk/login</loc>
+    </url>
+    <url>
         <loc>http://spoons.tk/rules</loc>
     </url>
     <url>
@@ -22,6 +25,6 @@
         <loc>http://spoons.tk/signup/resend_verification</loc>
     </url>
     <url>
-        <loc>http://spoons.tk/signup/leaderboard</loc>
+        <loc>http://spoons.tk/leaderboard</loc>
     </url>
 </urlset>
