@@ -5,12 +5,28 @@ require 'slim'
 module Assassins
   class Player
     def send_verification (url)
-      send_email('Please verify your Email',
-                 "Secret words: #{self.secret}\n#{url}")
+      vars = [{:name => "LINK",
+               :content => url},
+              {:name => "SECRET",
+               :content => self.secret}]
+      send_email_template("verify-email", vars)
     end
 
     def send_email (subject, message)
       Email.send([{:email => self.email, :name => self.name}], subject, message)
+    end
+
+    def send_email_template (template, vars)
+      rendered = Assassins::App.settings.mailer.templates.render(template, vars)
+      message = {:to => [{:email => self.email,
+                          :name => self.name}],
+                 :global_merge_vars => vars,
+                 :from_email => "ruby@spoons.tk",
+                 :from_name => "JJHS Spoons",
+                 :subject => "Activate your JJHS Spoons account",
+                 :html => rendered["html"]}
+      result = Assassins::App.settings.mailer.messages.send message, template
+      $stderr.puts result
     end
 
     def self.send_email_all (subject, message)
