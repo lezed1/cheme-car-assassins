@@ -21,7 +21,7 @@ module Assassins
       message = {:to => [{:email => self.email,
                           :name => self.name}],
                  :global_merge_vars => vars,
-                 :from_email => "ruby@spoons.tk",
+                 :from_email => "DoNotReply@spoons.tk",
                  :from_name => "JJHS Spoons",
                  :subject => "Activate your JJHS Spoons account",
                  :html => rendered["html"]}
