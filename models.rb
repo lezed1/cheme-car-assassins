@@ -23,10 +23,12 @@ module Assassins
     property :name, String
 
     belongs_to :target, :model => 'Player', :required => false
+    belongs_to :tagged_by, :model => 'Player', :required => false
     property :failed_kill_attempts, Integer, :default => 0
     property :is_alive, Boolean, :default => true
     property :kills, Integer, :default => 0
     property :last_activity, DateTime, :required => false
+    property :tagged_at, DateTime, :required => false
 
     property :verification_key, String,
              :default => lambda {|r,p| SecureRandom.uuid}
