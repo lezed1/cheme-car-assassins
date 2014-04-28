@@ -26,7 +26,7 @@
         h3
           | Congratulations, you have won! Did you see your name on the 
           a(href=url('/')) Home Page
-          | yet?
+          |  yet?
       - elsif !@game.start_time.nil?
         h3 Your target will be assigned on #{@game.start_time.strftime('%B %-d, %Y')}!
       - else
