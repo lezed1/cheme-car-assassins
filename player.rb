@@ -77,7 +77,7 @@ module Assassins
                               params['echalk_id'].downcase.strip : nil)
       if (player.nil?)
         return slim :login, :locals => {:errors =>
-          ['Invalid Andrew ID. Please try again.']}
+          ['Invalid Echalk ID. Please try again.']}
       end
 
       if (!player.active?)
@@ -111,7 +111,7 @@ module Assassins
     post '/signup', :game_state => :pregame do
       if (params.has_key?('echalk_id') && params['echalk_id'].index('@'))
         return slim :signup, :locals => {:errors =>
-          ['Please enter only your Andrew ID, not your full email address.']};
+          ['Please enter only your Echalk ID, not your full email address.']};
       end
 
       player = Player.new(:name => params['name'],
@@ -134,7 +134,7 @@ module Assassins
       player = Player.first(:echalk_id => params['echalk_id'])
       if (player.nil?)
         return slim :resend_verification, :locals => {:errors =>
-          ['Invalid Andrew ID']}
+          ['Invalid Echalk ID']}
       end
 
       if (player.is_verified)
