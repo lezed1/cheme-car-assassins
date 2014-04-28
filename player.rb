@@ -17,16 +17,22 @@ module Assassins
     end
 
     def send_email_template (template, vars)
-      rendered = Assassins::App.settings.mailer.templates.render(template, vars)
-      message = {:to => [{:email => self.email,
-                          :name => self.name}],
-                 :global_merge_vars => vars,
-                 :from_email => "DoNotReply@spoons.tk",
-                 :from_name => "JJHS Spoons",
-                 :subject => "Activate your JJHS Spoons account",
-                 :html => rendered["html"]}
-      result = Assassins::App.settings.mailer.messages.send message, template
-      $stderr.puts result
+      if !Assassins::App.settings.development?
+        rendered = Assassins::App.settings.mailer.templates.render(template, vars)
+        message = {:to => [{:email => self.email,
+                            :name => self.name}],
+                   :global_merge_vars => vars,
+                   :from_email => "DoNotReply@spoons.tk",
+                   :from_name => "JJHS Spoons",
+                   :subject => "Activate your JJHS Spoons account",
+                   :html => rendered["html"]}
+        result = Assassins::App.settings.mailer.messages.send message, template
+        $stderr.puts result
+      else
+        message = {:template => template,
+                   :vars => vars}
+        $stderr.puts message
+      end
     end
 
     def self.send_email_all (subject, message)
@@ -36,36 +42,6 @@ module Assassins
         to << {:email => player.email, :name => player.name}
       end
       Email.send(to, subject, message)
-    end
-
-    def self.prune_inactive
-      timeout = Time.now() - (60 * 60 * 24 * 2)
-      timeout_notify = []
-      target_notify = []
-      Player.all(:is_verified => true, :is_alive => true).each do |player|
-        if (player.last_activity < timeout)
-          assassin = Assassins::Player.first(:target_id => player.id,
-                                             :is_alive => true)
-          $stderr.puts "PLAYER TIMED OUT: #{player.name}"
-
-          player.is_alive = false
-          player.save!
-          timeout_notify << {:email => player.email, :name => player.name}
-
-          assassin.target = player.target
-          assassin.save!
-          target_notify << assassin
-        end
-      end
-
-      if !timeout_notify.empty?
-        Email.send(timeout_notify, 'You have been removed from the game',
-                   "You have been removed from the game because you have not made a kill in 3 days. Thanks for playing!")
-      end
-
-      target_notify.uniq.each do |assassin|
-        assassin.set_target_notify(assassin.target)
-      end
     end
   end
 
@@ -193,6 +169,7 @@ module Assassins
       elsif (params.has_key?('target_secret') &&
                target.secret.casecmp(params['target_secret']) == 0)
         target.is_alive = false
+        target.tagged_by = @player
         target.save!
         @player.kills += 1
         @player.failed_kill_attempts = 0
