@@ -5,6 +5,7 @@
         thead.noselect
           tr
             th(data-defaultsort='desc') Name
+            th Echalk ID
             th Tags
             - if game_state == :pregame
               th Verified?
@@ -16,6 +17,7 @@
           - (game_state == :pregame ? Assassins::Player.all : Assassins::Player.all(:is_verified => true)).each do |player|
             tr
               td = player.name
+              td = player.echalk_id
               td = player.kills
               - if game_state == :pregame
                 - if player.is_verified
