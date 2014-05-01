@@ -88,6 +88,10 @@ module Assassins
       slim :'admin/dashboard'
     end
 
+    get '/admin/dashboard/details', :is_admin => true do
+      slim :'admin/details'
+    end
+
     post '/admin/dashboard/start_game', :is_admin => true do
       players = Player.all(:is_verified => true)
       players.shuffle!

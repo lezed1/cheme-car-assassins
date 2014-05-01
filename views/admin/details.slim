@@ -1,0 +1,40 @@
+.row
+  .col-md-offset-1.col-md-10
+    .well
+      table.table.table-hover.table-striped.sortable
+        thead.noselect
+          tr
+            th(data-defaultsort='desc') Name
+            th Tags
+            - if game_state == :pregame
+              th Verified?
+            - else
+              th Alive?
+              th Target/Killed By
+            th Secret
+        tbody
+          - (game_state == :pregame ? Assassins::Player.all : Assassins::Player.all(:is_verified => true)).each do |player|
+            tr
+              td = player.name
+              td = player.kills
+              - if game_state == :pregame
+                - if player.is_verified
+                  td(data-value="true")
+                    span.label.label-default
+                      i.glyphicon.glyphicon-user
+                - else
+                  td(data-value="false")
+                    span.label.label-danger
+                      i.glyphicon.glyphicon-remove
+              - else
+                - if player.is_alive
+                  td(data-value="true")
+                    span.label.label-default
+                      i.glyphicon.glyphicon-check
+                  td = player.target.name
+                - else
+                  td(data-value="false")
+                    span.label.label-danger
+                      i.glyphicon.glyphicon-remove
+                  td = player.tagged_by.name
+              td.secret = player.secret
