@@ -33,6 +33,7 @@ module Assassins
     property :verification_key, String,
              :default => lambda {|r,p| SecureRandom.uuid}
     property :is_verified, Boolean, :default => false
+    property :has_paid, Boolean, :default => false
 
     def set_target_notify (target)
       self.target = target

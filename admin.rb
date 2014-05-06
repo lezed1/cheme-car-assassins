@@ -112,6 +112,13 @@ module Assassins
       Player.send_email_all(params['subject'], params['body'])
       redirect to('/admin/dashboard')
     end
+
+    post '/admin/setPaid/:id', :is_admin => true do |id|
+      player = Player.first(:echalk_id => id)
+      player.has_paid = params['paid']
+      player.save!
+      "Success! PLayer updated."
+    end
   end
 end
 

@@ -1,9 +1,13 @@
+script(src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js")
+
 .row
   .col-md-offset-1.col-md-10
     .well
       table.table.table-hover.table-striped.sortable
         thead.noselect
           tr
+            - if game_state == :pregame
+              th Paid
             th(data-defaultsort='desc') Name
             th Echalk ID
             th Tags
@@ -13,9 +17,18 @@
               th Alive?
               th Target/Killed By
             th Secret
-        tbody
+        tbody#table
           - (game_state == :pregame ? Assassins::Player.all : Assassins::Player.all(:is_verified => true)).each do |player|
             tr
+              - if game_state == :pregame
+                - if player.has_paid
+                  td.paid(data-value="true" data-id=player.echalk_id)
+                    span.label.label-default
+                      i.glyphicon.glyphicon-ok
+                - else
+                  td.paid(data-value="false" data-id=player.echalk_id)
+                    span.label.label-danger
+                      i.glyphicon.glyphicon-remove
               td = player.name
               td = player.echalk_id
               td = player.kills
@@ -40,3 +53,15 @@
                       i.glyphicon.glyphicon-remove
                   td = player.tagged_by.name
               td.hover = player.secret
+
+coffee:
+  $("#table").on "click", ".paid", (e) ->
+    el = $ e.currentTarget
+    paid = !el.data "value"
+    $.post "/admin/setPaid/#{el.data "id"}", paid: paid, (data, textStatus, jqXHR) ->
+      el.data value: paid
+      if paid
+        el.html '<span class="label label-default"><i class="glyphicon glyphicon-ok"></i></span>'
+      else
+        el.html '<span class="label label-danger"><i class="glyphicon glyphicon-remove"></i></span>'
+      
