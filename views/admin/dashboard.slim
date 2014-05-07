@@ -7,13 +7,13 @@
           strong = Assassins::Player.count
         #active
           | Active users: 
-          strong = Assassins::Player.count(:is_verified => true)
+          strong = Assassins::Player.count(:is_verified => true, :has_paid => true)
         - if game_state == :postgame
           p Game has ended.
         - elsif game_state == :ingame
           #alive
             | Alive users: 
-            strong = Assassins::Player.count(:is_verified => true, :is_alive => true)
+            strong = Assassins::Player.count(:is_verified => true, :is_alive => true, :has_paid => true)
         - else
           form(action=url('/admin/dashboard/start_game') method='post')
             button.btn.btn-info(type='submit') Start teh game!!!

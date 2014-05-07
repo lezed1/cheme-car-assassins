@@ -93,7 +93,7 @@ module Assassins
     end
 
     post '/admin/dashboard/start_game', :is_admin => true do
-      players = Player.all(:is_verified => true)
+      players = Player.all({:is_verified => true, :has_paid => true})
       players.shuffle!
       start_time = Time.now
       @game.start_time = start_time
