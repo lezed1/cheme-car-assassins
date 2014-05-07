@@ -11,7 +11,9 @@
     h3 Your target's information
     .well
       - if game_state == :ingame and not @player.target.nil?
-        h4 Name: #{@player.target.name}
+        h4
+          | Name: 
+          span.target.hover #{@player.target.name}
         p.user-info
           .confirm
           br
