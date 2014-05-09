@@ -8,7 +8,7 @@
             th Player Name
             th Still Alive?
         tbody
-          - Assassins::Player.all(:is_verified => true).shuffle!.each do |player|
+          - Assassins::Player.all(:is_verified => true, :has_paid => true).shuffle!.each do |player|
             tr
               td = player.kills
               td = player.name
