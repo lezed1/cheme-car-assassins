@@ -119,6 +119,16 @@ module Assassins
       player.save!
       "Success! PLayer updated."
     end
+
+    post '/admin/reinstate/:id', :is_admin => true do |id|
+      player = Player.first(:echalk_id => id)
+      tagger = player.tagged_by
+      player.set_target_notify tagger.target
+      tagger.set_target_notify player
+      player.is_alive = true
+      player.save!
+      "Success! PLayer updated."
+    end
   end
 end
 
