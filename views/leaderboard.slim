@@ -12,9 +12,9 @@
         .col-md-offset-3.col-md-6
           .progress
             .progress-bar(role="progressbar" aria-valuenow=percent aria-valuemin="0" aria-valuemax="100" style="width: #{percent}%")
-              span.sr-only #{percent}% Remaining
+              span #{percent}% Remaining
             .progress-bar.progress-bar-danger(role="progressbar" aria-valuenow=(100 - percent) aria-valuemin="0" aria-valuemax="100" style="width: #{(100 - percent)}%")
-              span.sr-only #{(100 - percent)}% Out
+              span #{(100 - percent)}% Out
       table.table.table-hover.table-striped.sortable
         thead.noselect
           tr
