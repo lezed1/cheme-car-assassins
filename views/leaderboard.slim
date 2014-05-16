@@ -1,6 +1,20 @@
 .row
   .col-md-offset-1.col-md-10
     .well
+      .row
+        .col-md-6.text-right
+          | Registered users: 
+          strong = Assassins::Player.count(:is_verified => true, :has_paid => true)
+        .col-md-6
+          | Alive users: 
+          strong = Assassins::Player.count(:is_verified => true, :is_alive => true, :has_paid => true)
+      .row
+        .col-md-offset-3.col-md-6
+          .progress
+            .progress-bar(role="progressbar" aria-valuenow=percent aria-valuemin="0" aria-valuemax="100" style="width: #{percent}%")
+              span.sr-only #{percent}% Complete
+            .progress-bar.progress-bar-danger(role="progressbar" aria-valuenow=(100 - percent) aria-valuemin="0" aria-valuemax="100" style="width: #{(100 - percent)}%")
+              span.sr-only #{(100 - percent)}% Complete
       table.table.table-hover.table-striped.sortable
         thead.noselect
           tr
