@@ -36,3 +36,6 @@
                 textarea.form-control(rows=3 name='body')
             .form-group
               button.btn.btn-primary(type='submit') Send!
+  .col-sm-2.col-sm-offset-1
+    - if game_state == :ingame
+      a.btn.btn-primary.btn-block(href=url('/admin/dashboard/shuffle_targets')) Shuffle all targets

@@ -92,6 +92,20 @@ module Assassins
       slim :'admin/details'
     end
 
+    get '/admin/dashboard/shuffle_targets', :is_admin => true do
+      players = Player.all({:is_verified => true, :has_paid => true, :is_alive => true})
+      players.shuffle!
+      shuffle_time = Time.now
+
+      players.each_index do |i|
+        players[i].set_target_notify(players[(i + 1) % players.length])
+        players[i].last_activity = shuffle_time
+        players[i].save!
+      end
+
+      redirect to('/admin/dashboard')
+    end
+
     post '/admin/dashboard/start_game', :is_admin => true do
       players = Player.all({:is_verified => true, :has_paid => true})
       players.shuffle!
