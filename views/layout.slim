@@ -56,8 +56,8 @@ html
                         input.form-control(type='password' name='secret' placeholder='Secret Words')
                     button.btn.btn-primary.btn-block(type='submit') Log In                    
     .container
-      - if (defined?(dangers) && errors.respond_to?(:each))
-        .alert.alert-error.alert-block
+      - if (defined?(errors) && errors.respond_to?(:each))
+        .alert.alert-danger.alert-block
           ul
             - errors.each do |message|
               li
