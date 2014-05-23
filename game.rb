@@ -27,6 +27,10 @@ module Assassins
       condition {(vals.include? game_state)}
     end
 
+    set(:freeforall) do |*vals|
+      condition {(vals.include? freeforall)}
+    end
+
     helpers do
       def game_state
         if defined?(@game_state) && !@game_state.nil?
@@ -42,6 +46,11 @@ module Assassins
             @game_state = :pregame
           end
         end
+      end
+
+      def freeforall
+        $stderr.puts @game
+        @game.freeforall
       end
     end
 

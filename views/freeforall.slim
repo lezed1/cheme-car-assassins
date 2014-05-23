@@ -1,0 +1,11 @@
+.row
+  .col-md-offset-2.col-md-8
+    .well.text-center
+      h1 Free for all.
+      form(action=url('/dashboard/freeforall/assassinate') method='post')
+        .form-group
+          label Enter anyone's secret words to confirm your tag!
+          .input-group.col-sm-6.col-sm-offset-3
+            input.form-control#target_words(name='target_secret' type='text' placeholder='Tomato Sneaker' required=true)
+            span.input-group-btn
+              button.btn.btn-primary(type='submit') Confirm

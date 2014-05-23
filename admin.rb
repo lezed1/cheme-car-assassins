@@ -92,6 +92,12 @@ module Assassins
       slim :'admin/details'
     end
 
+    get '/admin/dashboard/toggle_freeforall', :is_admin => true do
+      @game.freeforall = !@game.freeforall
+      @game.save
+      redirect to('/admin/dashboard')
+    end
+
     get '/admin/dashboard/shuffle_targets', :is_admin => true do
       players = Player.all({:is_verified => true, :has_paid => true, :is_alive => true})
       players.shuffle!

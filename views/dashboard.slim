@@ -7,6 +7,8 @@
         .secret
           strong Secret Words: 
           .label.label-success.hover = @player.secret
+    - if freeforall
+      a.btn.btn-primary.btn-large(href=url("/dashboard/freeforall")) Free for all!
   .col-sm-5.text-center
     h3 Your target's information
     .well

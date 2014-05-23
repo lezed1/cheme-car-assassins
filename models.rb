@@ -74,6 +74,7 @@ module Assassins
 
     property :id, Serial
     property :start_time, DateTime, :required => false
+    property :freeforall, Boolean, :default => false
   end
 end
 

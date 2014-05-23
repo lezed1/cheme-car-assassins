@@ -39,3 +39,7 @@
   .col-sm-2.col-sm-offset-1
     - if game_state == :ingame
       a.btn.btn-primary.btn-block(href=url('/admin/dashboard/shuffle_targets')) Shuffle all targets
+      - if freeforall
+        a.btn.btn-success.btn-block(href=url('/admin/dashboard/toggle_freeforall')) Disable Freeforall
+      - else
+        a.btn.btn-danger.btn-block(href=url('/admin/dashboard/toggle_freeforall')) Enable Freeforall

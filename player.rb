@@ -187,6 +187,37 @@ module Assassins
       end
     end
 
+    get '/dashboard/freeforall', :logged_in => true, :freeforall => true do
+      slim :freeforall
+    end
+
+    post '/dashboard/freeforall/assassinate', :logged_in => true, :game_state => :ingame, :freeforall => true do
+      target = Player.first(:secret => params['target_secret'], :is_verified => true, :is_alive => true, :has_paid => true)
+      if (@player.failed_kill_attempts > 5)
+        slim :dashboard, :locals => {:errors =>
+          ["You have entered too many incorrect secret words. Please contact us to unlock your account."]}
+      elsif (params.has_key?('target_secret') && target)
+        assassin = Player.first(:target_id => target.id)
+        target.is_alive = false
+        target.tagged_by = assassin
+        target.save!
+        @player.kills += 1
+        @player.failed_kill_attempts = 0
+        @player.last_activity = Time.now
+        @player.save!
+        assassin.set_target_notify(target.target)
+        assassin.save!
+        target.send_email('You were tagged!',
+                          "You have been tagged by #{@player.name}. Thanks for playing!")
+        redirect to('/dashboard/freeforall')
+      else
+        @player.failed_kill_attempts += 1
+        @player.save!
+        slim :freeforall, :locals => {:errors =>
+          ["That isn't your target's secret. Please try again."]}
+      end
+    end
+
     get /^\/dashboard(\/.*)?$/, :logged_in => false do
       redirect to('/login')
     end
