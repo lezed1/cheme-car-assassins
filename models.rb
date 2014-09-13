@@ -52,7 +52,7 @@ module Assassins
     end
 
     def email
-      "#{self.netid}@klschools.org"
+      "#{self.netid}@cornell.edu"
     end
 
     def active?

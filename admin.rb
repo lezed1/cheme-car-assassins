@@ -140,7 +140,7 @@ module Assassins
       tagger.set_target_notify player
       player.is_alive = true
       player.save!
-      "Success! PLayer updated."
+      "Success! Player updated."
     end
   end
 end

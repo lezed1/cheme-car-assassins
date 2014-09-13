@@ -112,7 +112,7 @@ module Assassins
       player.generate_secret! 2
       if (player.save)
         player.send_verification(url("/signup/verify?aid=#{player.netid}&nonce=#{player.verification_key}"))
-        slim :signup_confirm
+        slim :signup_confirm, :locals => {:netid => params['netid']}
       else
         slim :signup, :locals => {:errors => player.errors.full_messages}
       end
