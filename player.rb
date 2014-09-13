@@ -22,9 +22,9 @@ module Assassins
         message = {:to => [{:email => self.email,
                             :name => self.name}],
                    :global_merge_vars => vars,
-                   :from_email => "DoNotReply@spoons.tk",
-                   :from_name => "JJHS Spoons",
-                   :subject => "Activate your JJHS Spoons account",
+                   :from_email => "DoNotReply@donlon6.tk",
+                   :from_name => "Donlon 6 Assassins",
+                   :subject => "Activate your Donlon 6 Assassins account",
                    :html => rendered["html"]}
         result = Assassins::App.settings.mailer.messages.send message, template
         $stderr.puts result
@@ -65,11 +65,11 @@ module Assassins
     end
 
     post '/login' do
-      player = Player.first(:echalk_id => params.has_key?('echalk_id') ?
-                              params['echalk_id'].downcase.strip : nil)
+      player = Player.first(:netid => params.has_key?('netid') ?
+                              params['netid'].downcase.strip : nil)
       if (player.nil?)
         return slim :login, :locals => {:errors =>
-          ['Invalid Echalk ID. Please try again.']}
+          ['Invalid NetID. Please try again.']}
       end
 
       if (!player.active?)
@@ -101,17 +101,17 @@ module Assassins
     end
 
     post '/signup', :game_state => :pregame do
-      if (params.has_key?('echalk_id') && params['echalk_id'].index('@'))
+      if (params.has_key?('netid') && params['netid'].index('@'))
         return slim :signup, :locals => {:errors =>
-          ['Please enter only your Echalk ID, not your full email address.']};
+          ['Please enter only your NetID, not your full email address.']};
       end
 
       player = Player.new(:name => params['name'],
-                          :echalk_id => params.has_key?('echalk_id') ?
-                            params['echalk_id'].downcase.strip : nil)
+                          :netid => params.has_key?('netid') ?
+                            params['netid'].downcase.strip : nil)
       player.generate_secret! 2
       if (player.save)
-        player.send_verification(url("/signup/verify?aid=#{player.echalk_id}&nonce=#{player.verification_key}"))
+        player.send_verification(url("/signup/verify?aid=#{player.netid}&nonce=#{player.verification_key}"))
         slim :signup_confirm
       else
         slim :signup, :locals => {:errors => player.errors.full_messages}
@@ -123,10 +123,10 @@ module Assassins
     end
 
     post '/signup/resend_verification', :game_state => :pregame do
-      player = Player.first(:echalk_id => params['echalk_id'])
+      player = Player.first(:netid => params['netid'])
       if (player.nil?)
         return slim :resend_verification, :locals => {:errors =>
-          ['Invalid Echalk ID']}
+          ['Invalid NetID']}
       end
 
       if (player.is_verified)
@@ -136,12 +136,12 @@ module Assassins
 
       player.verification_key = SecureRandom.uuid
       player.save!
-      player.send_verification(url("/signup/verify?aid=#{player.echalk_id}&nonce=#{player.verification_key}"))
+      player.send_verification(url("/signup/verify?aid=#{player.netid}&nonce=#{player.verification_key}"))
       slim :signup_confirm
     end
 
     get '/signup/verify', :game_state => :pregame do
-      player = Player.first(:echalk_id => params['aid'])
+      player = Player.first(:netid => params['aid'])
 
       if (player.nil? || player.is_verified)
         return redirect to('/')

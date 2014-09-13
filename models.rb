@@ -13,10 +13,10 @@ module Assassins
     include DataMapper::Resource
 
     property :id, Serial
-    property :echalk_id, String, :unique => true,
+    property :netid, String, :unique => true,
       :messages => {
-        :presence  => 'Echalk Username must not be blank',
-        :is_unique => 'Echalk Username is already taken'
+        :presence  => 'NetID must not be blank',
+        :is_unique => 'NetID is already taken'
       }
     property :secret, String
 
@@ -38,7 +38,7 @@ module Assassins
     def set_target_notify (target)
       self.target = target
       send_email('You have a new target!',
-                 "Name: #{target.name}\n\nPlease remember that the official rules are posted at http://spoons.tk/rules")
+                 "Name: #{target.name}\n\nPlease remember that the official rules are posted at http://donlon6.tk/rules")
     end
 
     def generate_secret! (num_words)
@@ -53,7 +53,7 @@ module Assassins
     end
 
     def email
-      "#{self.echalk_id}@klschools.org"
+      "#{self.netid}@klschools.org"
     end
 
     def active?

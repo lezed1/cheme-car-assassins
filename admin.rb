@@ -134,14 +134,14 @@ module Assassins
     end
 
     post '/admin/setPaid/:id', :is_admin => true do |id|
-      player = Player.first(:echalk_id => id)
+      player = Player.first(:netid => id)
       player.has_paid = params['paid']
       player.save!
       "Success! PLayer updated."
     end
 
     post '/admin/reinstate/:id', :is_admin => true do |id|
-      player = Player.first(:echalk_id => id)
+      player = Player.first(:netid => id)
       tagger = player.tagged_by
       player.set_target_notify tagger.target
       tagger.set_target_notify player

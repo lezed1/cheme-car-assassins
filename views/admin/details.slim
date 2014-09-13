@@ -9,7 +9,7 @@ script(src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js")
             - if game_state == :pregame
               th Paid
             th(data-defaultsort='desc') Name
-            th Echalk ID
+            th NetID
             th Tags
             - if game_state == :pregame
               th Verified?
@@ -22,15 +22,15 @@ script(src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js")
             tr
               - if game_state == :pregame
                 - if player.has_paid
-                  td.paid(data-value="true" data-id=player.echalk_id)
+                  td.paid(data-value="true" data-id=player.netid)
                     span.label.label-default
                       i.glyphicon.glyphicon-ok
                 - else
-                  td.paid(data-value="false" data-id=player.echalk_id)
+                  td.paid(data-value="false" data-id=player.netid)
                     span.label.label-danger
                       i.glyphicon.glyphicon-remove
               td = player.name
-              td = player.echalk_id
+              td = player.netid
               td = player.kills
               - if game_state == :pregame
                 - if player.is_verified
@@ -49,7 +49,7 @@ script(src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js")
                         i.glyphicon.glyphicon-check
                     td.hover = player.target.name
                   - else
-                    td.tagged(data-value="false" data-id=player.echalk_id)
+                    td.tagged(data-value="false" data-id=player.netid)
                       span.label.label-danger
                         i.glyphicon.glyphicon-remove
                     td.hover = player.tagged_by.name

@@ -16,3 +16,6 @@ gem 'dm-sqlite-adapter', :group => :development
 gem 'dm-postgres-adapter', :group => :production
 
 gem 'bcrypt-ruby'
+
+# Use compatible version of tilt
+gem 'tilt', '~> 1.4.1'
