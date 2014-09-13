@@ -192,7 +192,7 @@ module Assassins
     end
 
     post '/dashboard/freeforall/assassinate', :logged_in => true, :game_state => :ingame, :freeforall => true do
-      target = Player.first(:secret => params['target_secret'], :is_verified => true, :is_alive => true, :has_paid => true)
+      target = Player.first(:secret => params['target_secret'], :is_verified => true, :is_alive => true)
       if (@player.failed_kill_attempts > 5)
         slim :dashboard, :locals => {:errors =>
           ["You have entered too many incorrect secret words. Please contact us to unlock your account."]}

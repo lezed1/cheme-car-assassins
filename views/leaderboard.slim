@@ -4,10 +4,10 @@
       .row
         .col-xs-6.text-right
           | Alive users: 
-          strong = Assassins::Player.count(:is_verified => true, :is_alive => true, :has_paid => true)
+          strong = Assassins::Player.count(:is_verified => true, :is_alive => true)
         .col-xs-6
           | Registered users: 
-          strong = Assassins::Player.count(:is_verified => true, :has_paid => true)
+          strong = Assassins::Player.count(:is_verified => true)
       .row
         .col-md-offset-3.col-md-6
           .progress
@@ -22,7 +22,7 @@
             th Player Name
             th Still Alive?
         tbody
-          - Assassins::Player.all(:is_verified => true, :has_paid => true).shuffle!.each do |player|
+          - Assassins::Player.all(:is_verified => true).shuffle!.each do |player|
             tr
               td = player.kills
               td = player.name

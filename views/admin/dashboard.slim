@@ -7,13 +7,13 @@
           strong = Assassins::Player.count
         #active
           | Active users: 
-          strong = Assassins::Player.count(:is_verified => true, :has_paid => true)
+          strong = Assassins::Player.count(:is_verified => true)
         - if game_state == :postgame
           p Game has ended.
         - elsif game_state == :ingame
           #alive
             | Alive users: 
-            strong = Assassins::Player.count(:is_verified => true, :is_alive => true, :has_paid => true)
+            strong = Assassins::Player.count(:is_verified => true, :is_alive => true)
         - else
           form(action=url('/admin/dashboard/start_game') method='post')
             button.btn.btn-info(type='submit') Start teh game!!!
@@ -36,10 +36,3 @@
                 textarea.form-control(rows=3 name='body')
             .form-group
               button.btn.btn-primary(type='submit') Send!
-  .col-sm-2.col-sm-offset-1
-    - if game_state == :ingame
-      a.btn.btn-primary.btn-block(href=url('/admin/dashboard/shuffle_targets')) Shuffle all targets
-      - if freeforall
-        a.btn.btn-success.btn-block(href=url('/admin/dashboard/toggle_freeforall')) Disable Freeforall
-      - else
-        a.btn.btn-danger.btn-block(href=url('/admin/dashboard/toggle_freeforall')) Enable Freeforall

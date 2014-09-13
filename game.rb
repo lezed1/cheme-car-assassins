@@ -55,7 +55,7 @@ module Assassins
     end
 
     get '/leaderboard', :game_state => [:ingame, :postgame] do
-      slim :leaderboard, :locals => { :percent => 100 * Assassins::Player.count(:is_verified => true, :is_alive => true, :has_paid => true) / Assassins::Player.count(:is_verified => true, :has_paid => true) }
+      slim :leaderboard, :locals => { :percent => 100 * Assassins::Player.count(:is_verified => true, :is_alive => true) / Assassins::Player.count(:is_verified => true) }
     end
   end
 end

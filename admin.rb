@@ -99,7 +99,7 @@ module Assassins
     end
 
     get '/admin/dashboard/shuffle_targets', :is_admin => true do
-      players = Player.all({:is_verified => true, :has_paid => true, :is_alive => true})
+      players = Player.all({:is_verified => true, :is_alive => true})
       players.shuffle!
       shuffle_time = Time.now
 
@@ -113,7 +113,7 @@ module Assassins
     end
 
     post '/admin/dashboard/start_game', :is_admin => true do
-      players = Player.all({:is_verified => true, :has_paid => true})
+      players = Player.all({:is_verified => true})
       players.shuffle!
       start_time = Time.now
       @game.start_time = start_time
@@ -131,13 +131,6 @@ module Assassins
     post '/admin/dashboard/send_mass_email', :is_admin => true do
       Player.send_email_all(params['subject'], params['body'])
       redirect to('/admin/dashboard')
-    end
-
-    post '/admin/setPaid/:id', :is_admin => true do |id|
-      player = Player.first(:netid => id)
-      player.has_paid = params['paid']
-      player.save!
-      "Success! PLayer updated."
     end
 
     post '/admin/reinstate/:id', :is_admin => true do |id|
