@@ -26,47 +26,31 @@
           transform-origin: @trans;
 }
 
-.animation(@a, @b, @c, @d, @e) {
-  -webkit-animation: @a @b @c @d @e;
-     -moz-animation: @a @b @c @d @e;
-       -o-animation: @a @b @c @d @e;
-          animation: @a @b @c @d @e;
+.animation(@a, @b, @c, @d) {
+  -webkit-animation: @a @b @c @d;
+     -moz-animation: @a @b @c @d;
+       -o-animation: @a @b @c @d;
+          animation: @a @b @c @d;
 }
 
-.wiggle() {
+.spin() {
   0% {
     .transform(rotate(0deg));
   }
 
-  5% {
-    .transform(rotate(2deg));
-  }
-
-  10% {
-    .transform(rotate(-4deg));
-  }
-
-  15% {
-    .transform(rotate(4deg));
-  }
-
-  20% {
-    .transform(rotate(-2deg));
-  }
-
-  25% {
-    .transform(rotate(0deg));
+  100% {
+    .transform(rotate(360deg));
   }
 }
 
-@-webkit-keyframes wiggle {.wiggle()}
-   @-moz-keyframes wiggle {.wiggle()}
-     @-o-keyframes wiggle {.wiggle()}
-        @keyframes wiggle {.wiggle()}
+@-webkit-keyframes spin {.spin()}
+   @-moz-keyframes spin {.spin()}
+     @-o-keyframes spin {.spin()}
+        @keyframes spin {.spin()}
 
-.spoon-image {
-  .animation(wiggle, 4s, ease, 0s, infinite);
-  .transform-origin(bottom center);
+.donlon {
+  .animation(spin, 10s, infinite, linear);
+  margin-top: -20px;
 }
 
 .hover {

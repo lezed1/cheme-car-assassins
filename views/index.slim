@@ -6,12 +6,12 @@
 .row
   - if @player.nil? && game_state == :pregame
     .col-md-6
-      img.img-responsive.center.spoon-image src='spoon_purple.png' alt="xX{Dancing Spoon}Xx"
+      img.img-responsive.center.donlon src='donlon.svg'
     .col-md-6
       == slim :signup, :locals => {:programs => {}}, :layout => false
   - else
     .col-md-6.col-md-offset-3
-      img.img-responsive.center.spoon-image src='spoon_purple.png' alt="xX{Dancing Spoon}Xx"
+      img.img-responsive.center.donlon src='donlon.svg'
 
 .row
   .col-md-12
