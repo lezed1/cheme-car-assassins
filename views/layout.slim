@@ -71,4 +71,4 @@ html
     coffee:
       $ ->
         el = $(".hover")
-        el.click -> el.toggleClass("hover")
+        el.click -> $(@).toggleClass("hover")
