@@ -137,7 +137,7 @@ module Assassins
       player.verification_key = SecureRandom.uuid
       player.save!
       player.send_verification(url("/signup/verify?aid=#{player.netid}&nonce=#{player.verification_key}"))
-      slim :signup_confirm
+      slim :signup_confirm, :locals => {:netid => params['netid']}
     end
 
     get '/signup/verify', :game_state => :pregame do
