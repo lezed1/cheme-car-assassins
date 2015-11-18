@@ -6,11 +6,11 @@ module Assassins
       mailer = Assassins::App.settings.mailer
       message = {
         :subject => subject,
-        :from_name => 'Donlon 6 Assassins',
+        :from_name => 'Cornell ChemE Car Assassins',
         :text => body,
         :to => to,
         :preserve_recipients => false,
-        :from_email => 'DoNotReply@donlon6.tk'
+        :from_email => 'DoNotReply@chemecar-cornell.lzd1.tk'
       }
       if !mailer.nil?
         $stderr.puts mailer.messages.send(message)

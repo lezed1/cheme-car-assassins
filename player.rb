@@ -22,9 +22,9 @@ module Assassins
         message = {:to => [{:email => self.email,
                             :name => self.name}],
                    :global_merge_vars => vars,
-                   :from_email => "DoNotReply@donlon6.tk",
-                   :from_name => "Donlon 6 Assassins",
-                   :subject => "Activate your Donlon 6 Assassins account",
+                   :from_email => "DoNotReply@chemecar-cornell.tk",
+                   :from_name => "Cornell ChemE Assassins",
+                   :subject => "Activate your Cornell ChemE Assassins account",
                    :html => rendered["html"]}
         result = Assassins::App.settings.mailer.messages.send message, template
         $stderr.puts result

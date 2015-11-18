@@ -37,7 +37,7 @@ module Assassins
     def set_target_notify (target)
       self.target = target
       send_email('You have a new target!',
-                 "Name: #{target.name}\n\nPlease remember that the official rules are posted at http://donlon6.tk/rules")
+                 "Name: #{target.name}\n\nPlease remember that the official rules are posted at http://chemecar-cornell.lzd1.tk/rules")
     end
 
     def generate_secret! (num_words)
