@@ -78,9 +78,6 @@ GEM
     less (2.3.2)
       commonjs (~> 0.2.6)
     libv8 (3.11.8.17)
-    mandrill-api (1.0.37)
-      excon (~> 0.16.0)
-      json (~> 1.7.7)
     minitest (4.7.5)
     multi_json (1.7.7)
     rack (1.5.2)
@@ -117,7 +114,6 @@ DEPENDENCIES
   dm-postgres-adapter
   dm-sqlite-adapter
   less
-  mandrill-api
   simple-navigation
   sinatra
   slim
