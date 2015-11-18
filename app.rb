@@ -2,7 +2,7 @@
 require 'bundler/setup'
 require 'sinatra/base'
 require 'simple-navigation'
-#require 'mandrill'
+require 'mandrill'
 require 'data_mapper'
 require 'less'
 require 'slim'
@@ -25,7 +25,7 @@ module Assassins
       helpers ::SimpleNavigation::Helpers
 
       if !settings.development?
-        set :mailer, nil
+        set :mailer, Mandrill::API.new
       else
         set :mailer, nil
       end
